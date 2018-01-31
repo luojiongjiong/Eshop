@@ -21,4 +21,29 @@ int s=20;
 boolean flag=false;
 
 }
-
+public Object login(String loginacct , String userpswd,HttpSession session) {
+		start();
+		
+		try {
+			Member member = memberService.queryMemberByLogin(loginacct);
+			
+			if(member!=null) {
+				if(userpswd.equals(member.getUserpswd())) {
+					
+					session.setAttribute(Const.LOGIN_MEMBER, member);
+					
+					success(true);
+				}else {
+					success(false);
+				}
+				
+			}else {
+				success(false);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return end();
+	}
